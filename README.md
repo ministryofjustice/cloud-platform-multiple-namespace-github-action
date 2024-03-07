@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ministryofjustice/github-actions/reject-multi-namespace-prs@main
+      - uses: ministryofjustice/cloud-platform-multiple-namespace-github-action@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
