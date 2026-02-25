@@ -23,10 +23,13 @@ class GithubClient
   end
 
   def files_in_pr
-    client.pull_request_files(repo, pr_number)
-      .map(&:filename)
-      .sort
-      .uniq
+    client.pull_request_files(repo, pr_number).flat_map do |f|
+      if f.status == "renamed" && f.respond_to?(:previous_filename) && f.previous_filename
+        [f.filename, f.previous_filename]
+      else
+        [f.filename]
+      end
+    end.sort.uniq
   end
 
   def commit_changes(message)
